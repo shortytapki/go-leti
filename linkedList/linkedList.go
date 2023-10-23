@@ -8,25 +8,25 @@ import (
 
 // Описание ноды листа
 type Node struct {
-	Val  int
-	Next *Node
+	value  int
+	next *Node
 }
 
 // Описание листа
 type LinkedList struct {
-	Head *Node
+	head *Node
 }
 
 // Форматированный вывод
 func (l *LinkedList) PrintList() {
 	res := ""
-	pointer := l.Head
+	pointer := l.head
 
-	for pointer.Next != nil {
-		res += strconv.Itoa(pointer.Val) + " -> "
-		pointer = pointer.Next
+	for pointer.next != nil {
+		res += strconv.Itoa(pointer.value) + " -> "
+		pointer = pointer.next
 	}
-	fmt.Println(res + strconv.Itoa(pointer.Val) + " -> nil")
+	fmt.Println(res + strconv.Itoa(pointer.value))
 }
 
 // Создаёт новый связанный список
@@ -35,7 +35,7 @@ func New(q int) *LinkedList {
 	// Создаём экземпляр списка
 	// и первый элемент:
 	head := &Node{}
-	list := LinkedList{Head: head}
+	list := LinkedList{head: head}
 
 	// Запомним первый
 	// элемент:
@@ -45,7 +45,7 @@ func New(q int) *LinkedList {
 	// количестве q с учётом первого:
 	for nodeCreations := 1; nodeCreations < q; nodeCreations++ {
 		newNode := &Node{}
-		pointer.Next = newNode
+		pointer.next = newNode
 		pointer = newNode
 	}
 
@@ -54,25 +54,24 @@ func New(q int) *LinkedList {
 
 // Добавляет ноду с переданным значением
 // в конец списка
-func (l *LinkedList) Add(val int) {
+func (l *LinkedList) Add(value int) {
 	
 	// Создаём новую ноду c
 	// терминирующим указателем
-	newNode := Node{Val: val}
-	pointer := l.Head
+	newNode := Node{value: value}
+	pointer := l.head
 
 	if (l.Size() == 1) {
-		pointer.Next = &newNode
-		fmt.Println(pointer.Next)
+		pointer.next = &newNode
 		return
 	}
 
 	// Ищем предпоследний элемент
-	for pointer.Next != nil {
-		pointer = pointer.Next
+	for pointer.next != nil {
+		pointer = pointer.next
 	}
 	// Добавляем ноду
-	pointer.Next = &newNode
+	pointer.next = &newNode
 }
 
 // Удаляет последний элемент списка
@@ -83,26 +82,26 @@ func (l *LinkedList) Pop() {
 		return
 	}
 
-	pointer := l.Head
+	pointer := l.head
 	// Ищем предпоследний элемент
-	for pointer.Next.Next != nil {
-		pointer = pointer.Next
+	for pointer.next.next != nil {
+		pointer = pointer.next
 	}
 
 	// Делаем предпоследний элемент
 	// терминирующим
-	pointer.Next = nil
+	pointer.next = nil
 }
 
 // Возвращает размер списка
 func (l *LinkedList) Size() int {
 	// Начинаем с головы
 	counter := 1
-	pointer := l.Head
+	pointer := l.head
 
-	for pointer.Next != nil {
+	for pointer.next != nil {
 		counter++
-		pointer = pointer.Next
+		pointer = pointer.next
 	}
 
 	return counter
@@ -117,16 +116,16 @@ func (l *LinkedList) At(pos int) (int, error) {
 		return 0, errors.New("position is out of range")
 	}
 
-	pointer := l.Head
+	pointer := l.head
 	currentNodeIndex := 0
 
 	// Ищем нужный элемент
 	for currentNodeIndex < pos {
-		pointer = pointer.Next
+		pointer = pointer.next
 		currentNodeIndex++
 	}
 
-	return pointer.Val, nil
+	return pointer.value, nil
 }
 
 // Удаляет элемент на позиции pos
@@ -139,9 +138,9 @@ func (l *LinkedList) DeleteFrom(pos int) error {
 	}
 	// Проверяем удаление начальной
 	// ноды
-	pointer := l.Head
+	pointer := l.head
 	if pos == 0 {
-		l.Head = pointer.Next
+		l.head = pointer.next
 	} else {
 		currentNodeIndex := 0
 		isLastNode := pos == l.Size()
@@ -151,15 +150,15 @@ func (l *LinkedList) DeleteFrom(pos int) error {
 		for currentNodeIndex != pos-1 {
 			// Проверяем удаление последней ноды
 			if isLastNode && currentNodeIndex == pos-2 {
-				pointer.Next = nil
+				pointer.next = nil
 				return nil
 			}
-			pointer = pointer.Next
+			pointer = pointer.next
 			currentNodeIndex++
 		}
 		// Указываем на элемент после
 		// нужного
-		pointer.Next = pointer.Next.Next
+		pointer.next = pointer.next.next
 	}
 	return nil
 }
@@ -168,24 +167,24 @@ func (l *LinkedList) DeleteFrom(pos int) error {
 // (если 0 <= pos < размер списка)
 // на переданной позиции.
 // Иначе вёрнёт ошибку.
-func (l *LinkedList) UpdateAt(pos, val int) error {
+func (l *LinkedList) UpdateAt(pos, value int) error {
 	// Проверка на дурика
 	if pos < 0 || pos > l.Size() {
 		return errors.New("position is out of range")
 	}
 	// Проверяем обновление начальной
 	// ноды
-	pointer := l.Head
+	pointer := l.head
 	if pos == 0 {
-		l.Head.Val = val
+		l.head.value = value
 	} else {
 		currentNodeIndex := 0
 		// Идём до элемента
 		for currentNodeIndex != pos {
-			pointer = pointer.Next
+			pointer = pointer.next
 			currentNodeIndex++
 		}
-		pointer.Val = val
+		pointer.value = value
 	}
 	return nil
 }
@@ -194,12 +193,12 @@ func NewFromSlice(s []int) *LinkedList {
 	//Сразу создаём список
 	size := len(s)
 	list := New(size)
-	pointer := list.Head
+	pointer := list.head
 
 	// Проходимся с добавлением значений
 	for idx := 0; idx < len(s); idx++ {
-		pointer.Val = s[idx]
-		pointer = pointer.Next
+		pointer.value = s[idx]
+		pointer = pointer.next
 	}
 	return list
 }
