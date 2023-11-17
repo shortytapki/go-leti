@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhyme Base</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-black font-mono">
+  <main class="max-w-[1440px] mx-auto text-white p-10 flex flex-col gap-10">
+    <h1 class="text-3xl mb-9">
+      CloudSound
+    </h1>
+    <div>
+      <section id="rhymes" class="overflow-y-scroll flex flex-col h-[300px]">
+        <h2 class="text-xl">Your rhymes</h2>
+      </section>
+      <form id="rhymesForm" class="flex flex-col gap-2 max-w-[400px]">
+        <label class="block">Add rhyme</label>
+        <input type="text" placeholder="New rhyme..." class="p-6 text-black font-xl" name="rhyme" required />
+        <button type="submit" class="bg-white text-black max-w-[70px] py-2 px-3">Save</button>
+      </form>
+    </div>
+    <div>
+      <section id="songs" class="overflow-y-scroll flex flex-col h-[300px]">
+        <h2 class="text-xl">Favourite songs</h2>
+      </section>
+      <form id="songsForm">
+        <label class="block">Add song</label>
+        <input type="text" placeholder="Artist" class="p-3 text-black font-xl" name="artist" required />
+        <input type="text" placeholder="Title" class="p-3 text-black font-xl" name="title" required />
+        <button type="submit" class="bg-white text-black max-w-[70px] py-2 px-3">Save</button>
+      </form>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+
+</html>
