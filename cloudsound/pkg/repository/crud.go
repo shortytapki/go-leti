@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"golangCourse/cloudsound/entities"
+	"golangCourse/cloudsound/pkg/entities"
 )
 // Функция для создания записи 
 // песни в БД 

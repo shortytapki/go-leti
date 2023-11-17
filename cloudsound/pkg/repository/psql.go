@@ -34,7 +34,8 @@ func New (relativeEnvPath string) (*PGRepo, error) {
 		os.Getenv("PASSWORD"),
 		os.Getenv("HOST"),
 		os.Getenv("PORT"),
-		os.Getenv("DB"))
+		os.Getenv("DB"),
+	)
 
 	pool, err := pgxpool.Connect(context.Background(), connStr)
 	
