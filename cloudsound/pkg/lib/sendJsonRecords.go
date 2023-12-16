@@ -16,8 +16,9 @@ func SendJsonRecords[T any](w http.ResponseWriter, records []T) {
 			w.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
 			return
-			} 
+		} 
 			w.Write(jsonResponse)
+			return
 	}
 	
 	w.Header().Set("Content-Type", "application/json")

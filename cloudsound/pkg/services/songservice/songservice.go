@@ -35,6 +35,7 @@ func ProcessSongsRequest(w http.ResponseWriter, r *http.Request, db *repository.
 				return 
 			}
 			lib.SendJsonRecords(w, []entities.Song{song})
+			return
 		}
 		songs, err := db.GetSongs()
 		if err != nil {
