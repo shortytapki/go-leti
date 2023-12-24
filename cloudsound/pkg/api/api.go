@@ -4,20 +4,32 @@ import (
 	"golangCourse/cloudsound/pkg/repository"
 	songsservice "golangCourse/cloudsound/pkg/services/songservice"
 	"net/http"
+	"os"
+
+	"log/slog"
 
 	"github.com/gorilla/mux"
 )
 
+type logHandler struct {
+	h slog.Handler
+}
 // Описание структуры API
 type api struct {
 	host string
 	db 	 *repository.PGRepo
 	r    *mux.Router
+	logger *slog.Logger
 }
 
 // Функция-конструктор API
 func New(host string, r *mux.Router, db *repository.PGRepo) *api {
-	return &api{host: host, r: r, db: db }
+	return &api{
+		host: host, 
+		r: r, 
+		db: db, 
+		logger: slog.New(slog.NewTextHandler(os.Stdout, nil)), 
+	}
 }
 
 // Метод для запуска HTTP-сервера
@@ -27,6 +39,7 @@ func (api *api) ListenAndServe() error {
 
 // Метод для конфигурации роутов
 func (api *api) FillEndpoints() {
+	api.r.Use(api.middleware)
 	api.r.Handle("/", http.FileServer(http.Dir("../client")))
 	api.r.HandleFunc("/api/songs", api.SongsHandler).Methods(
 		http.MethodGet,
