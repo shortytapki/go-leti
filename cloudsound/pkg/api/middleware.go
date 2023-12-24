@@ -3,7 +3,6 @@ package api
 import (
 	"fmt"
 	"net/http"
-
 	"github.com/go-http-utils/headers"
 )
 

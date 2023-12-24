@@ -5,15 +5,10 @@ import (
 	songsservice "golangCourse/cloudsound/pkg/services/songservice"
 	"net/http"
 	"os"
-
 	"log/slog"
-
 	"github.com/gorilla/mux"
 )
 
-type logHandler struct {
-	h slog.Handler
-}
 // Описание структуры API
 type api struct {
 	host string
